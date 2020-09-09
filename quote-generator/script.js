@@ -1,3 +1,9 @@
+const quoteContainer = document.getElementById("quote-container");
+const quoteText = document.getElementById("quote");
+const authorText = document.getElementById("author");
+const twitterBtn = document.getElementById("twitter");
+const newQuoteBtn = document.getElementById("new-quote");
+
 async function getQuote() {
   const proxyUrl = `https://cors-anywhere.herokuapp.com/`;
   const apiUrl = `http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json`;
@@ -9,7 +15,17 @@ async function getQuote() {
     //response = await fetch(proxyUrl + apiUrl);
     response = await fetch(localProxyUrl);
     const data = await response.json();
-    console.log(data);
+    if (data.quoteAuthor === "") {
+      authorText.innerText = "Unknown";
+    } else {
+      authorText.innerText = data.quoteAuthor;
+    }
+    if (data.quoteText.length > 120) {
+      quoteText.classList.add("long-quote");
+    } else {
+      quoteText.classList.remove("long-quote");
+    }
+    quoteText.innerHTML = data.quoteText;
   } catch (error) {
     // const reader = response.body.getReader();
     // new ReadableStream({
@@ -32,9 +48,19 @@ async function getQuote() {
     //     }
     // });
 
-    console.log("whoops, no quote", error);
-    //getQuote();
+    //console.log("whoops, no quote", error);
+    getQuote();
   }
 }
+
+function tweetQuote() {
+  const quote = quoteText.innerText;
+  const author = authorText.innerText;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quote} - ${author}`;
+  window.open(twitterUrl, "_blank");
+}
+
+newQuoteBtn.addEventListener("click", getQuote);
+twitterBtn.addEventListener("click", tweetQuote);
 
 getQuote();
