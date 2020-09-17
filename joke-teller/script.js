@@ -137,13 +137,7 @@ function tellMe(joke) {
 }
 
 let currentIndex = -1;
-const korJoke = [
-  "백짓장도 맞들면 낫다",
-  "콩 심은데 콩나고 팥 심은데 팥난다",
-  "소 귀에 경 읽기",
-  "쥐 구멍에도 볕들 날 있다",
-  "독도는 우리땅",
-];
+const korJoke = ["별", "토끼", "다람쥐", "무당벌레", "달팽이"];
 async function getJokes() {
   let joke = "";
   const apiUrl =
