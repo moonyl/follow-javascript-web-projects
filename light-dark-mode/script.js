@@ -7,18 +7,18 @@ const image3 = document.getElementById("image3");
 const textBox = document.getElementById("text-box");
 
 function darkMode() {
-  nav.style.backgroundColor = 'rgb(0 0 0 / 50%)';
-  textBox.style.backgroundColor = 'rgb(255 255 255 / 50%)';
+  nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
+  textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
   toggleIcon.children[0].textContent = "Dark Mode";
-  toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
-  imageMode("dark")
+  toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
+  imageMode("dark");
 }
 
 function lightMode() {
-  nav.style.backgroundColor = 'rgb(255 255 255 / 50%)';
-  textBox.style.backgroundColor = 'rgb(0 0 0 / 50%)';
+  nav.style.backgroundColor = "rgb(255 255 255 / 50%)";
+  textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
   toggleIcon.children[0].textContent = "Dark Mode";
-  toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+  toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
   imageMode("light");
 }
 
@@ -32,11 +32,19 @@ function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     darkMode();
-
+    localStorage.setItem("theme", "dark");
   } else {
     document.documentElement.setAttribute("data-theme", "light");
     lightMode();
+    localStorage.setItem("theme", "light");
   }
 }
 
 toggleSwitch.addEventListener("change", switchTheme);
+
+const theme = localStorage.getItem("theme");
+document.documentElement.setAttribute("data-theme", theme);
+if (theme === "dark") {
+  toggleSwitch.checked = true;
+  darkMode();
+}
