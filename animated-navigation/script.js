@@ -5,21 +5,29 @@ const nav2 = document.getElementById("nav-2");
 const nav3 = document.getElementById("nav-3");
 const nav4 = document.getElementById("nav-4");
 const nav5 = document.getElementById("nav-5");
+const navs = [nav1, nav2, nav3, nav4, nav5];
+
+function animateNav(from, to) {
+  navs.forEach((nav, index) => {
+    nav.classList.replace(
+      `slide-${from}-${index + 1}`,
+      `slide-${to}-${index + 1}`
+    );
+  });
+}
 
 function toggleNav() {
   menuBars.classList.toggle("change");
   overlay.classList.toggle("overlay-active");
   if (overlay.classList.contains("overlay-active")) {
-    overlay.classList.remove("overlay-slide-left");
-    overlay.classList.add("overlay-slide-right");
+    overlay.classList.replace("overlay-slide-left", "overlay-slide-right");
+    animateNav("out", "in");
   } else {
-    overlay.classList.remove("overlay-slide-right");
-    overlay.classList.add("overlay-slide-left");
+    overlay.classList.replace("overlay-slide-right", "overlay-slide-left");
+    animateNav("in", "out");
   }
 }
 menuBars.addEventListener("click", toggleNav);
-nav1.addEventListener("click", toggleNav);
-nav2.addEventListener("click", toggleNav);
-nav3.addEventListener("click", toggleNav);
-nav4.addEventListener("click", toggleNav);
-nav5.addEventListener("click", toggleNav);
+navs.forEach((nav) => {
+  nav.addEventListener("click", toggleNav);
+});
